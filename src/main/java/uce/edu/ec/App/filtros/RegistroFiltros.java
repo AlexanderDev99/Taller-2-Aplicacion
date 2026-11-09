@@ -3,6 +3,10 @@ package uce.edu.ec.App.filtros;
 import java.util.ArrayList;
 import java.util.List;
 
+import uce.edu.ec.App.filtros.convolucion.FiltroConvolucionBase;
+import uce.edu.ec.App.filtros.convolucion.FiltroConvolucionDinamico7x7;
+import uce.edu.ec.App.filtros.convolucion.FiltroConvolucionDinamico9x9;
+import uce.edu.ec.App.filtros.convolucion.FiltroConvolucionBase;
 import uce.edu.ec.App.filtros.word.FiltrosWord;
 
 public final class RegistroFiltros {
@@ -28,6 +32,11 @@ public final class RegistroFiltros {
 		
 		// Tarea 3 - reductor de bits
 		filtros.add(new FiltroReduccionBits()); 
+		
+		//Tarea 4 - Convolucion 
+		filtros.add(new FiltroConvolucionBase()); 
+		filtros.add(new FiltroConvolucionDinamico7x7()); 
+		filtros.add(new FiltroConvolucionDinamico9x9());
 		
 		return filtros;
 	}
