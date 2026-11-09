@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Secuencia de imagenes con opacidad decreciente (logica de secuenciaImagenes de la clase). */
 public class FiltroSecuenciaOpacidad implements FiltroImagen {
 
 	private static final int mascara = 0xFF;

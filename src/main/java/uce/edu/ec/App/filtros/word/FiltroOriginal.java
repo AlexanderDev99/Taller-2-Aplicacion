@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import uce.edu.ec.App.filtros.FiltroSimple;
 
-/** Word 01: devuelve la imagen sin cambios. */
+
 public class FiltroOriginal extends FiltroSimple {
 
 	@Override

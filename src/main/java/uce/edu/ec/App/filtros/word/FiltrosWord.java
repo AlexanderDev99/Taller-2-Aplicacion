@@ -5,7 +5,7 @@ import java.util.List;
 
 import uce.edu.ec.App.filtros.FiltroImagen;
 
-/** Agrupa los 21 filtros de la tarea 3 (estilo Word) en el orden del documento. */
+// Agrupacion de todos los filtros
 public final class FiltrosWord {
 
 	private FiltrosWord() {

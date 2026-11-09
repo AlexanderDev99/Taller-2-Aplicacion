@@ -4,10 +4,6 @@ import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Base para los filtros que producen una sola imagen.
- * Solo hay que implementar getNombre() y procesar().
- */
 public abstract class FiltroSimple implements FiltroImagen {
 
 	protected static final int mascara = 0xFF;

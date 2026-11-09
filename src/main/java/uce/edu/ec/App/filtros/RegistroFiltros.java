@@ -5,10 +5,6 @@ import java.util.List;
 
 import uce.edu.ec.App.filtros.word.FiltrosWord;
 
-/**
- * Lista central de filtros disponibles.
- * PARA AGREGAR UN FILTRO NUEVO: crear su clase y anadir una linea aqui.
- */
 public final class RegistroFiltros {
 
 	private RegistroFiltros() {
@@ -24,8 +20,14 @@ public final class RegistroFiltros {
 		//tarea 3 (21 filtros estilo Word)
 		filtros.addAll(FiltrosWord.crear());
 		
-		//contraste 
+		//tarea 3 contraste 
 		filtros.add(new FiltroContraste());
+		
+		// Tarea 3 - reductor de niveles de color (N parametrizable)
+		filtros.add(new FiltroReductorNivelesColor());
+		
+		// Tarea 3 - reductor de bits
+		filtros.add(new FiltroReduccionBits()); 
 		
 		return filtros;
 	}

@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import uce.edu.ec.App.filtros.FiltroSimple;
 
-/** Word 02: escala de grises por luminosidad. */
+
 public class FiltroEscalaGrises extends FiltroSimple {
 
 	@Override

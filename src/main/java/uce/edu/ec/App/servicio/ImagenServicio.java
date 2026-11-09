@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-/** Entrada/salida de imagenes. No conoce filtros ni interfaz grafica. */
+
 public class ImagenServicio {
 
 	public BufferedImage cargar(File archivo) throws IOException {
@@ -20,7 +20,7 @@ public class ImagenServicio {
 		return imagen;
 	}
 
-	/** Guarda una imagen; el formato sale de la extension (png por defecto). */
+	// Guarda una imagen; el formato sale de la extension (png por defecto).
 	public File guardar(BufferedImage imagen, File destino) throws IOException {
 		String nombre = destino.getName().toLowerCase();
 		String formato = "png";
@@ -49,7 +49,7 @@ public class ImagenServicio {
 		return destino;
 	}
 
-	/** Guarda varias imagenes en una carpeta como prefijo1.png, prefijo2.png, ... */
+	// Guardamos la imagen con el prefijo prefijo1.png
 	public void guardarSecuencia(List<BufferedImage> imagenes, File carpeta, String prefijo) throws IOException {
 		if (!carpeta.exists()) {
 			carpeta.mkdirs();

@@ -2,7 +2,6 @@ package uce.edu.ec.App.filtros;
 
 import java.awt.image.BufferedImage;
 
-/** Filtro de escala de grises (logica de generarImagenGris de la clase). */
 public class FiltroGris extends FiltroSimple {
 
 	@Override

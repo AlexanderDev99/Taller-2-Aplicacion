@@ -1,44 +1,27 @@
 package uce.edu.ec.App.filtros;
 
 import java.awt.image.BufferedImage;
+import java.util.Collections;
+import java.util.List;
 
-/**
- * Filtro de contraste (logica de imagenContraste de la clase).
- * Suma 'nivel' a cada canal: positivo sube (Math.min(c + nivel, 255)),
- * negativo baja (Math.max(c + nivel, 0)).
- */
+
 public class FiltroContraste extends FiltroSimple implements FiltroAjustable {
 
 	private volatile int nivel = 0;
 
 	@Override
 	public String getNombre() {
-		return "Contraste (subir o bajar)";
+		return "Contraste (deslizador)";
 	}
 
 	@Override
-	public String getEtiquetaParametro() {
-		return "Nivel de contraste";
+	public List<ParametroFiltro> getParametros() {
+		return Collections.singletonList(new ParametroFiltro("Nivel de contraste", -255, 255, 0));
 	}
 
 	@Override
-	public int getMinimo() {
-		return -255;
-	}
-
-	@Override
-	public int getMaximo() {
-		return 255;
-	}
-
-	@Override
-	public int getValorInicial() {
-		return 0;
-	}
-
-	@Override
-	public void setValor(int valor) {
-		this.nivel = valor;
+	public void setValores(int[] valores) {
+		this.nivel = valores[0];
 	}
 
 	@Override

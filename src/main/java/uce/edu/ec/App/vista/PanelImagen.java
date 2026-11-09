@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-/** Panel que dibuja una imagen escalada al espacio disponible, sin deformarla. */
+// Panel que dibuja una imagen escalada 
 public class PanelImagen extends JPanel {
 
 	private static final long serialVersionUID = 1L;

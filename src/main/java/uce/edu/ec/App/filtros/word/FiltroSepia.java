@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import uce.edu.ec.App.filtros.FiltroSimple;
 
-/** Word 03: tono sepia. */
+
 public class FiltroSepia extends FiltroSimple {
 
 	@Override

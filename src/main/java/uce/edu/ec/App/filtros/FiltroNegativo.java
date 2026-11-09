@@ -9,7 +9,6 @@ public class FiltroNegativo extends FiltroSimple{
 
 	@Override
 	public String getNombre() {
-		// TODO Auto-generated method stub
 		return "Imagen en negativo";
 	}
 

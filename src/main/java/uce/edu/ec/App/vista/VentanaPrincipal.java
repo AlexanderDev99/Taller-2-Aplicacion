@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,8 +27,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import uce.edu.ec.App.filtros.FiltroAjustable;
 import uce.edu.ec.App.filtros.FiltroImagen;
+import uce.edu.ec.App.filtros.ParametroFiltro;
 
-/** Interfaz grafica. No contiene logica de filtros ni de archivos: solo muestra y notifica. */
+// Interfaz grafica. 
 public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -43,11 +45,9 @@ public class VentanaPrincipal extends JFrame {
 	private final JPanel panelNavegacion = new JPanel(new FlowLayout(FlowLayout.CENTER));
 	private final JLabel lblEstado = new JLabel(" Cargue una imagen para comenzar.");
 
-	// Deslizador de ajuste: solo visible cuando el filtro elegido es FiltroAjustable
-	private final JPanel panelAjuste = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	private final JLabel lblAjuste = new JLabel();
-	private final JLabel lblValorAjuste = new JLabel();
-	private final JSlider sliderAjuste = new JSlider(0, 100, 0);
+	// Deslizadores de ajuste: uno por parametro, solo visibles si el filtro es FiltroAjustable
+	private final JPanel panelAjuste = new JPanel();
+	private final List<JSlider> slidersAjuste = new ArrayList<>();
 
 	private List<BufferedImage> resultados = new ArrayList<>();
 
@@ -80,14 +80,7 @@ public class VentanaPrincipal extends JFrame {
 		barra.add(btnGuardar);
 		cmbFiltros.addActionListener(e -> actualizarPanelAjuste());
 
-		sliderAjuste.setPaintTicks(true);
-		sliderAjuste.setPaintLabels(true);
-		sliderAjuste.setPreferredSize(new Dimension(450, 50));
-		sliderAjuste.addChangeListener(e -> lblValorAjuste.setText(String.valueOf(sliderAjuste.getValue())));
-		lblValorAjuste.setPreferredSize(new Dimension(40, 20));
-		panelAjuste.add(lblAjuste);
-		panelAjuste.add(sliderAjuste);
-		panelAjuste.add(lblValorAjuste);
+		panelAjuste.setLayout(new BoxLayout(panelAjuste, BoxLayout.Y_AXIS));
 		panelAjuste.setVisible(false);
 
 		JPanel norte = new JPanel(new BorderLayout());
@@ -122,7 +115,7 @@ public class VentanaPrincipal extends JFrame {
 		btnGuardar.setEnabled(false);
 	}
 
-	// ---------- Enlaces con el controlador ----------
+	// Enlaces con el controlador
 
 	public void onCargar(Runnable accion) {
 		btnCargar.addActionListener(e -> accion.run());
@@ -136,38 +129,66 @@ public class VentanaPrincipal extends JFrame {
 		btnGuardar.addActionListener(e -> accion.run());
 	}
 
-	// ---------- Estado de la vista ----------
+	// Estado de la vista
 
 	public void setFiltros(List<FiltroImagen> filtros) {
 		cmbFiltros.setModel(new DefaultComboBoxModel<>(filtros.toArray(new FiltroImagen[0])));
 		actualizarPanelAjuste();
 	}
 
-	/** Valor actual del deslizador de ajuste. */
-	public int getValorAjuste() {
-		return sliderAjuste.getValue();
+	// Valores actuales de los deslizadores de ajuste, en el orden de los parametros. 
+	public int[] getValoresAjuste() {
+		int[] valores = new int[slidersAjuste.size()];
+		for (int i = 0; i < valores.length; i++) {
+			valores[i] = slidersAjuste.get(i).getValue();
+		}
+		return valores;
 	}
 
-	/** Muestra u oculta el deslizador segun el filtro seleccionado y lo configura. */
+	// Reconstruye los deslizadores segun el filtro seleccionado o los oculta
 	private void actualizarPanelAjuste() {
+		panelAjuste.removeAll();
+		slidersAjuste.clear();
+
 		FiltroImagen filtro = getFiltroSeleccionado();
 		if (filtro instanceof FiltroAjustable) {
-			FiltroAjustable ajustable = (FiltroAjustable) filtro;
-			int paso = Math.max(1, (ajustable.getMaximo() - ajustable.getMinimo()) / 6);
-
-			sliderAjuste.setMinimum(ajustable.getMinimo());
-			sliderAjuste.setMaximum(ajustable.getMaximo());
-			sliderAjuste.setMajorTickSpacing(paso);
-			sliderAjuste.setLabelTable(sliderAjuste.createStandardLabels(paso, ajustable.getMinimo()));
-			sliderAjuste.setValue(ajustable.getValorInicial());
-
-			lblAjuste.setText(ajustable.getEtiquetaParametro() + ":");
-			lblValorAjuste.setText(String.valueOf(sliderAjuste.getValue()));
+			for (ParametroFiltro parametro : ((FiltroAjustable) filtro).getParametros()) {
+				panelAjuste.add(crearFilaAjuste(parametro));
+			}
 			panelAjuste.setVisible(true);
 		} else {
 			panelAjuste.setVisible(false);
 		}
 		panelAjuste.revalidate();
+		panelAjuste.repaint();
+		getContentPane().revalidate();
+	}
+
+	private JPanel crearFilaAjuste(ParametroFiltro parametro) {
+		int rango = parametro.getMaximo() - parametro.getMinimo();
+		int paso = rango % 6 == 0 ? rango / 6 : Math.max(1, rango / 5);
+
+		JLabel lblNombre = new JLabel(parametro.getEtiqueta() + ":");
+		lblNombre.setPreferredSize(new Dimension(150, 20));
+
+		JSlider slider = new JSlider(parametro.getMinimo(), parametro.getMaximo(), parametro.getValorInicial());
+		slider.setMajorTickSpacing(paso);
+		slider.setPaintTicks(true);
+		slider.setPaintLabels(true);
+		slider.setLabelTable(slider.createStandardLabels(paso, parametro.getMinimo()));
+		slider.setPreferredSize(new Dimension(450, 50));
+
+		JLabel lblValor = new JLabel(String.valueOf(slider.getValue()));
+		lblValor.setPreferredSize(new Dimension(40, 20));
+		slider.addChangeListener(e -> lblValor.setText(String.valueOf(slider.getValue())));
+
+		slidersAjuste.add(slider);
+
+		JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		fila.add(lblNombre);
+		fila.add(slider);
+		fila.add(lblValor);
+		return fila;
 	}
 
 	public FiltroImagen getFiltroSeleccionado() {
@@ -215,7 +236,7 @@ public class VentanaPrincipal extends JFrame {
 		lblEstado.setText(" " + texto);
 	}
 
-	// ---------- Dialogos ----------
+	// Dialogos
 
 	public File pedirArchivoImagen() {
 		JFileChooser fc = new JFileChooser();

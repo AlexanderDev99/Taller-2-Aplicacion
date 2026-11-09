@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 import uce.edu.ec.App.filtros.FiltroSimple;
 
-/** Word 08-14: recolorea la imagen con una tonalidad (tr, tg, tb) a partir del gris. */
 public class FiltroTonalidad extends FiltroSimple {
 
 	private final String nombre;
@@ -42,6 +41,7 @@ public class FiltroTonalidad extends FiltroSimple {
 				int gris = OperacionesColor.luminosidad(r, g, b);
 
 				// generamos el color con la tonalidad
+				// Word 08-14: recolorea la imagen con una tonalidad (tr, tg, tb) a partir del gris.
 				int r1 = gris * tr / 255;
 				int g1 = gris * tg / 255;
 				int b1 = gris * tb / 255;

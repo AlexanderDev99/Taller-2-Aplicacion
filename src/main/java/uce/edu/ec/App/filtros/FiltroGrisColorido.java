@@ -2,7 +2,7 @@ package uce.edu.ec.App.filtros;
 
 import java.awt.image.BufferedImage;
 
-/** Filtro gris colorido (logica de generarImagenGrisColorida de la clase). */
+
 public class FiltroGrisColorido extends FiltroSimple {
 
 	@Override

@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 import uce.edu.ec.App.filtros.FiltroSimple;
 
-/** Word 15-21: tonalidad (tr, tg, tb) aclarada una cantidad dada hacia el blanco. */
 public class FiltroTonalidadClara extends FiltroSimple {
 
 	private final String nombre;
@@ -26,6 +25,7 @@ public class FiltroTonalidadClara extends FiltroSimple {
 		return nombre;
 	}
 
+	// Word 15-21: tonalidad (tr, tg, tb) aclarada una cantidad dada hacia el blanco.
 	@Override
 	protected BufferedImage procesar(BufferedImage imagen) {
 		int ancho = imagen.getWidth();

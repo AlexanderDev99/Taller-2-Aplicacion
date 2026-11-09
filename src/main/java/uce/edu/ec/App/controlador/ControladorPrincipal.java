@@ -10,10 +10,11 @@ import javax.swing.SwingWorker;
 
 import uce.edu.ec.App.filtros.FiltroAjustable;
 import uce.edu.ec.App.filtros.FiltroImagen;
+import uce.edu.ec.App.filtros.ParametroFiltro;
 import uce.edu.ec.App.servicio.ImagenServicio;
 import uce.edu.ec.App.vista.VentanaPrincipal;
 
-/** Coordina la vista, el servicio de imagenes y los filtros. */
+//  Coordina la vista, el servicio de imagenes y los filtros 
 public class ControladorPrincipal {
 
 	private final VentanaPrincipal vista;
@@ -57,13 +58,22 @@ public class ControladorPrincipal {
 			return;
 		}
 
-		// Si el filtro tiene parametro, se toma el valor del deslizador
+		// Si el filtro tiene parametros, se toman los valores de los deslizadores
 		final String detalle;
 		if (filtro instanceof FiltroAjustable) {
 			FiltroAjustable ajustable = (FiltroAjustable) filtro;
-			int valor = vista.getValorAjuste();
-			ajustable.setValor(valor);
-			detalle = " (" + ajustable.getEtiquetaParametro() + ": " + valor + ")";
+			int[] valores = vista.getValoresAjuste();
+			ajustable.setValores(valores);
+
+			StringBuilder sb = new StringBuilder(" (");
+			List<ParametroFiltro> parametros = ajustable.getParametros();
+			for (int i = 0; i < parametros.size(); i++) {
+				if (i > 0) {
+					sb.append(", ");
+				}
+				sb.append(parametros.get(i).getEtiqueta()).append(": ").append(valores[i]);
+			}
+			detalle = sb.append(")").toString();
 		} else {
 			detalle = "";
 		}

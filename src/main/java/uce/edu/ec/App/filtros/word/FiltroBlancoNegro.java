@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 import uce.edu.ec.App.filtros.FiltroSimple;
 
-/** Word 05-07: blanco y negro segun un umbral de luminosidad. */
 public class FiltroBlancoNegro extends FiltroSimple {
 
 	private final String nombre;

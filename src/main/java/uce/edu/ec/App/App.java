@@ -15,7 +15,6 @@ public class App {
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			} catch (Exception e) {
-				// se usa el look and feel por defecto
 			}
 			VentanaPrincipal vista = new VentanaPrincipal();
 			new ControladorPrincipal(vista, new ImagenServicio(), RegistroFiltros.obtenerFiltros());
