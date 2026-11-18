@@ -9,6 +9,7 @@ import uce.edu.ec.App.filtros.convolucion.FiltroConvolucionDinamico9x9;
 import uce.edu.ec.App.filtros.convolucion.FiltroConvolucionEdgeDetection;
 import uce.edu.ec.App.filtros.convolucion.FiltroConvolucionEmboss;
 import uce.edu.ec.App.filtros.convolucion.FiltroConvolucionSharpen;
+import uce.edu.ec.App.filtros.matriz.FiltrosMatrizColor;
 import uce.edu.ec.App.filtros.convolucion.FiltroConvolucionBlur;
 import uce.edu.ec.App.filtros.convolucion.FiltroConvolucionBoxBlur;
 import uce.edu.ec.App.filtros.convolucion.FiltroConvolucionBase;
@@ -48,6 +49,9 @@ public final class RegistroFiltros {
 		filtros.add(new FiltroConvolucionEmboss()); // Filtro 4
 		filtros.add(new FiltroConvolucionBoxBlur()); //filtro 5
 		
+		//Tarea 5 - Matrices de color
+		//para ver todas las matrices, se encuentran en el paquete matriz y la clase Matrices
+		filtros.addAll(FiltrosMatrizColor.crear());
 		
 		return filtros;
 	}
